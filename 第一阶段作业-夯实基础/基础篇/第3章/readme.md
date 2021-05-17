@@ -1,4 +1,5 @@
 #第三章节
+
 ##Class类
 - Java文件必须以.java作为拓展名
 
@@ -20,6 +21,7 @@
 - String[] args是main函数的形参
 
 ##基本数据类型
+
 ###boolen 布尔
 - 只有ture和false默认为false
 
