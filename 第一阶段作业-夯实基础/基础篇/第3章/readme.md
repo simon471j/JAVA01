@@ -181,3 +181,38 @@ public class Main {
 
 }
 ```
+```
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("输入塔的层数");
+        int row = sc.nextInt();
+        if ((row > 4 && row < 12) && (row & 1) != 0) {
+            int gap = row / 2 + 1;
+            int star = 1;
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < gap; j++) {
+                    System.out.print(" ");
+                }
+                for (int j = 0; j < star; j++) {
+                    System.out.print("*");
+                }
+                System.out.println("");
+
+                if (i < row / 2) {
+                    star += 2;
+                    gap--;
+                } else {
+                    star -= 2;
+                    gap++;
+                }
+            }
+        }
+    }
+
+}
+```
