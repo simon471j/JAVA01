@@ -1,29 +1,29 @@
-#第八章节
+# 第八章节
 
-##Java类库
+## Java类库
 - 包名以java开始的包是Java核心包
 - 包名以Javax开始的包是Java拓展包
 
-###数字相关类
+### 数字相关类
 - 整数 Short,Int,Long
 - 浮点数 Float,Double
 - 大整数 BigInteger(大整数),BigDecimal(大浮点数)
 - 随机数类 Random
 - 工具类 Math
 
-###字符串相关类
+### 字符串相关类
 - String Java中是由频率最高的类
 
-####可变字符串
+#### 可变字符串
 - StringBuffer (字符串加减，同步，性能好)
 - StringBuilder(字符串加减，不同步，性能更好)
 
-###时间类
+### 时间类
 - java.util.Date（基本废弃）
 - java.sql.Date（和数据库对应的时间类）
 - Calendar是目前程序中最常用的，但是是抽象类
 
-####Calendar
+#### Calendar
  方法名|具体描述
  ----|----
 get(int firld)|返回给指定日历字段的值
@@ -32,10 +32,10 @@ set(int firld,int value)|将给定的日历字段设置为给定值
 add(int firld,int amount)|根据日历的规则，为给定的日历字段添加或减去指定的时间向量
 getTime()|返回一个表示此Calendar时间值（从历元到现在的毫秒偏移量）的Date对象
 
-####java.time
+#### java.time
 - 新的Java日期，时间API的基础包
 
-###格式化类
+### 格式化类
 >java.test.Format
 >>NumberFormat:数字格式化，抽象类
 >>>eg. 1234567 -> 1,234,567

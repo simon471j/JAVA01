@@ -1,5 +1,5 @@
-#第十章节
-##数组
+# 第十章节
+## 数组
 - 概念：同一种类型数据的集合。其实数组就是一个容器。
 - 格式1：元素类型[] 数组名 = new 元素类型[元素个数或数组长度];
 - 格式2：元素类型[] 数组名 = new 元素类型[]{元素，元素，……}
@@ -9,7 +9,7 @@
 1. fori循环
 2. foreach循环
 
-##JCF(Java Collections Framework) 集合框架
+## JCF(Java Collections Framework) 集合框架
 - 容器 能存放数据的空间结构
 - 容器框架 为表示和操作容器而规定的一种标准体系结构
 1. 对外的接口 容器中所能存放的抽象数据类型
@@ -37,17 +37,19 @@
 3. TreeSet
 4. LinkedHashMap
 
+
+
 ### List
 - 有序的Collection
 - 允许重复的元素
 
-####LinkedList
+#### LinkedList
 1. 以双向链表实现的列表，不支持同步
 2. 可被当作堆栈、队列和双端队列进行操作
 3. 顺序访问高效，随机访问较差，中间插入和删除高效
 4. 适用于经常变化的数据
 
-##集合
+## 集合
 - HashSet 基于散列函数的集合 无序 不支持同步
 - TreeSet 基于树结构的集合 可排序的 不支持同步
 - LinkedHashSet 基于散列函数和双向链表的集合 可排序的 不支持同步
@@ -55,32 +57,32 @@
 - 无异性
 - 无序性
 
-###HashSet
+### HashSet
 - 基于HashMap实现的 可容纳null 不支持同步
 
-###LinkedHashSet
+### LinkedHashSet
 - 继承HashSet
 - 也是基于HashMap实现的，可以容纳null
 - 不支持同步
 - 方法和HashSet基本一致
 - 通过一个双向链表维护插入顺序
 
-###TreeSet
+### TreeSet
 - 基于TreeMap实现的 **不可以**容纳null元素 不支持同步
 
-##映射Map
+## 映射Map
 - 键值对
 - HashTable 同步 慢 数据量小
 - HashMap 不支持同步 快 数据量大
 - Properties 同步 文件形式 数据量小
 
-###LinkedHashMap
+### LinkedHashMap
 - 基于双向链表的维持插入顺序的HashMap
 
-###TreeMap
+### TreeMap
 - 基于红黑树的Map 可以根据key的自然排序或者compareTo方法进行排序输出
 
-##Code
+## Code
 - 注意Comparable接口的使用
 - 实现Comparable<Currency>接口 并且继承了Currency 那么就继承了Currency中的属性 则不需要再自定义名字和值 直接用Currency提供的get和set方法 就可以进行compareTo方法的比较
 
