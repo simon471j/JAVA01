@@ -428,5 +428,6 @@ public class SendEmail {
     }
 }
 
-
 ```
+
+![运行结果截图测试](https://user-images.githubusercontent.com/69376030/120182650-4028a380-c241-11eb-9b81-5ea89be3cc29.png)
