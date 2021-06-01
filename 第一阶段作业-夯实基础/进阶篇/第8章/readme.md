@@ -143,6 +143,152 @@ class HelloNative{
 	- 调用Process.waitFor等待目标进程的中止（当前进程会阻塞）
 
 ## Code
+
+
+- 客户端
+![](http://m.qpic.cn/psc?/V52eQ02X1BMeBe145GYm44PR403TVauc/ruAMsa53pVQWN7FLK88i5oFFXwBDLcuMjxetncwwQrAVGh1bpI4aLlgjS9YYRwRKLh1qEMhRWCj82TewbGvX.scIjw7FFH2QygZYmCk4pOk!/mnull&bo=oQFDAAAAAAADB8E!&rf=photolist&t=5)
+
+```
+package Server;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import java.rmi.RemoteException;
+import java.util.Scanner;
+
+public class HelloWorldClient {
+
+
+
+    public static void main(String[] args) throws NamingException {
+        Context context = new InitialContext();
+        String url = "rmi://127.0.0.1:8080/helloworld";
+        IHelloWorld helloWorldImpl = (IHelloWorld) context.lookup(url);
+        System.out.println("请输入指令：如输入javac HelloWorld，就通过RMI方法请求服务端的编译HelloWorld功能；" +
+                "如输入java HelloWorld，就通过RMI方法请求服务端的执HelloWorld功能");
+        Scanner scanner = new Scanner(System.in);
+        String cmd;
+        while (true) {
+            cmd = scanner.nextLine();
+            if (cmd.equals("javac HelloWorld"))
+                break;
+            else if (cmd.equals("java HelloWorld"))
+                break;
+            else
+                System.out.println("wrong input, please retry");
+
+        }
+        try {
+            helloWorldImpl.printHelloWorld(cmd);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            System.out.println("方法执行异常");
+        }
+    }
+}
+
 ```
 
 ```
+package Server;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface IHelloWorld extends Remote {
+    public void printHelloWorld(String cmd) throws RemoteException;
+}
+```
+- 服务端
+- ![](http://m.qpic.cn/psc?/V52eQ02X1BMeBe145GYm44PR403TVauc/ruAMsa53pVQWN7FLK88i5oFFXwBDLcuMjxetncwwQrCt6LDoi2bWusyKEq2tPn7l*sKtwG005UBhOgwhUhiz5yg5grHZ4wm2WMNN6XGD*nM!/mnull&bo=jQGvAAAAAAADBwE!&rf=photolist&t=5)
+
+```
+package Server;
+
+import java.io.*;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class IHelloWorldImpl extends UnicastRemoteObject implements IHelloWorld {
+    protected IHelloWorldImpl() throws RemoteException {
+
+    }
+
+    @Override
+    public void printHelloWorld(String cmd) {
+        String compileFilePath = "javac D:/IDEA工程文件/chapter_8_server/src/main/java/Server/HelloWorld.java";
+        String runFilePath = "java D:/IDEA工程文件/chapter_8_server/src/main/java/Server/HelloWorld";
+        if (cmd.equals("javac HelloWorld"))
+            cmd = compileFilePath;
+        else if (cmd.equals("java HelloWorld"))
+            cmd = runFilePath;
+        Process process;
+        try {
+            process = Runtime.getRuntime().exec(cmd);
+            System.out.println("执行成功");
+        } catch (IOException e) {
+            e.printStackTrace();
+            try {
+                process = Runtime.getRuntime().exec(cmd);
+                InputStream inputStream = process.getErrorStream();
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String content;
+                while ((content = bufferedReader.readLine()) != null)
+                    System.out.println(content);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
+}
+
+```
+
+```
+package Server;
+
+import java.io.*;
+
+public class HelloWorld {
+    public static void main(String[] args) throws IOException {
+        System.out.println("helloworld");
+    }
+}
+
+```
+
+```
+package Server;
+
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+
+public class HelloWorldServer {
+    public static void main(String[] args) throws RemoteException, MalformedURLException {
+        IHelloWorldImpl helloWorldImpl = new IHelloWorldImpl();
+        System.out.println("对象生成");
+        LocateRegistry.createRegistry(8080);
+        Naming.rebind("rmi://127.0.0.1:8080/helloworld",helloWorldImpl);
+        System.out.println("在8080端口注册 等待客户端");
+    }
+}
+
+```
+
+```
+package Server;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface IHelloWorld extends Remote {
+    public void printHelloWorld(String cmd) throws RemoteException;
+}
+
+```
+### 注意：客户端和服务端包名要一致 不然会出现以下错误
+    java.lang.ClassNotFoundException: XXX (no security manager: RMI class loader disabled)
